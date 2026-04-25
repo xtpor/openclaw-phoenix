@@ -23,7 +23,7 @@ docker exec openclaw-phoenix openclaw onboard
 3. Do the pairing process (if you are using telegram)
 
 ```
-openclaw pairing approve telegram 55LAP7FR
+docker exec openclaw-phoenix openclaw pairing approve telegram 55LAP7FR
 ```
 
 4. Add the special prompt teach the agent about this particular container
