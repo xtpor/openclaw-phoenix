@@ -1,5 +1,9 @@
 FROM nixos/nix:latest
 
+# Disable Nix sandbox to prevent seccomp BPF errors in Docker/macOS
+RUN echo "filter-syscalls = false" >> /etc/nix/nix.conf && \
+    echo "sandbox = false" >> /etc/nix/nix.conf
+
 # 1. Tell npm exactly where to install global packages
 ENV NPM_CONFIG_PREFIX="/root/.npm-global"
 
