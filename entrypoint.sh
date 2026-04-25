@@ -7,7 +7,7 @@ RECOVERY_SHELL="/config/recovery.nix" # Read-only fallback
 # Use provided arguments or default to 'openclaw gateway start'
 CMD="$@"
 if [ -z "$CMD" ]; then
-    CMD="npx openclaw gateway start"
+    CMD="npx openclaw gateway run --allow-unconfigured"
 fi
 
 # 1. Check if I have created a shell.nix
@@ -20,7 +20,7 @@ fi
 echo "Testing main shell.nix..."
 if nix-instantiate "$MAIN_SHELL" > /dev/null 2>&1; then
     echo "shell.nix is valid. Booting..."
-    exec nix-shell "$MAIN_SHELL" --run "$CMD"
+    exec nix-shell "$MAIN_SHELL" --run "exec $CMD"
 else
     echo "WARNING: shell.nix is corrupted or invalid!"
     echo "Falling back to recovery.nix..."
@@ -36,5 +36,5 @@ else
     cp "$RECOVERY_SHELL" "$MAIN_SHELL"
 
     # Boot using the guaranteed recovery shell
-    exec nix-shell "$RECOVERY_SHELL" --run "$CMD"
+    exec nix-shell "$RECOVERY_SHELL" --run "exec $CMD"
 fi

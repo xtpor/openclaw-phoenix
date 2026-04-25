@@ -10,6 +10,8 @@ pkgs.mkShell {
     gnused        # Essential: For text manipulation
     gnugrep       # Essential: For searching logs
     vim
+    ps
+    pstree
   ];
 
   shellHook = ''
